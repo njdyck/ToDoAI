@@ -145,11 +145,38 @@ export const sendMessage = async (message, model = 'openai') => {
     const agentReply = response.data.choices[0].message.content;
     
     // Todos aus der Antwort extrahieren
-    const todos = extractTodosFromMessage(agentReply);
+    const extractedTodos = extractTodosFromMessage(agentReply);
+    
+    // Automatisch alle extrahierten ToDos speichern
+    const savedTodos = [];
+    if (extractedTodos && extractedTodos.length > 0) {
+      // Für jedes extrahierte ToDo die addTodo-Funktion aufrufen
+      for (const todoData of extractedTodos) {
+        const savedTodo = await addTodo(todoData);
+        savedTodos.push(savedTodo);
+      }
+    }
+    
+    // Erstelle eine Zusammenfassung der hinzugefügten ToDos
+    let summaryText = "";
+    if (savedTodos.length > 0) {
+      summaryText = `\n\nIch habe ${savedTodos.length} ToDo${savedTodos.length === 1 ? '' : 's'} für dich erstellt:`;
+      savedTodos.forEach((todo, index) => {
+        const priorityText = todo.priority === 'high' ? 'Hohe Priorität' : 
+                            todo.priority === 'medium' ? 'Mittlere Priorität' : 'Niedrige Priorität';
+        const dateText = todo.date ? `(Fällig: ${todo.date})` : '';
+        summaryText += `\n${index + 1}. "${todo.text}" - ${priorityText} ${dateText}`;
+      });
+    } else {
+      summaryText = "\n\nIch konnte leider keine ToDos aus deiner Anfrage erstellen.";
+    }
+    
+    // Zusammenfassung zur Antwort hinzufügen
+    const enhancedReply = agentReply + summaryText;
     
     return {
-      agent_reply: agentReply,
-      todos: todos
+      agent_reply: enhancedReply,
+      todos: savedTodos
     };
   } catch (error) {
     console.error('Fehler beim Senden der Nachricht:', error);

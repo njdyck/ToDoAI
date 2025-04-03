@@ -85,23 +85,10 @@ function App() {
       };
       setMessages(prevMessages => [...prevMessages, newAgentMessage]);
 
-      // Wenn neue Todos aus der Antwort extrahiert wurden, füge sie direkt hinzu
+      // Die API-Funktion hat bereits die ToDos gespeichert, daher nur neu laden
       if (response.todos && response.todos.length > 0) {
-        // Für jedes neue Todo eine API-Anfrage senden, um es zu speichern
-        const todoPromises = response.todos.map(todoData => api.addTodo(todoData));
-        
-        try {
-          const newTodos = await Promise.all(todoPromises);
-          // Füge neue Todos direkt zum State hinzu
-          setTodos(prevTodos => [...prevTodos, ...newTodos]);
-        } catch (todoError) {
-          console.error("Fehler beim Hinzufügen der ToDos:", todoError);
-          setError('Fehler beim Hinzufügen der ToDos.');
-          // Neu laden als Fallback
-          await loadTodos();
-        }
+        await loadTodos();
       }
-
     } catch (err) {
       console.error("Chat API Error:", err);
       const errorMessage = err.message || 'Fehler beim Senden der Nachricht.';

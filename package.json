@@ -1,0 +1,12 @@
+{
+  "name": "todo-ai",
+  "private": true,
+  "version": "1.0.0",
+  "scripts": {
+    "dev": "cd frontend-react && npm run dev",
+    "build": "cd frontend-react && npm run build",
+    "lint": "cd frontend-react && npm run lint",
+    "preview": "cd frontend-react && npm run preview",
+    "install-deps": "cd frontend-react && npm install"
+  }
+} 
