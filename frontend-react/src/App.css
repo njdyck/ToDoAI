@@ -1,0 +1,182 @@
+:root {
+  /* Dark Theme Colors basierend auf dem Screenshot */
+  --bg-color: #202124;
+  --surface-color: #2d2e31;
+  --primary-color: #3b82f6;
+  --primary-hover-color: #2563eb;
+  --text-color: #e2e8f0;
+  --text-subtitle-color: #9aa0a6;
+  --text-muted-color: #94a3b8;
+  --border-color: #444446;
+  --input-bg-color: #3c3c3f;
+  --input-border-color: #5f6368;
+  --agent-message-bg: #3c3c3f;
+  --user-message-bg: #1e40af;
+  --todo-item-bg: #2d2e31;
+  --todo-item-hover-bg: #3c3c3f;
+  --danger-color: #cf3140;
+  --danger-hover-color: #b0272f;
+  --priority-high: #cf3140;
+  --priority-medium: #f59e0b;
+  --priority-low: #10b981;
+  --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.2);
+  --shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.3);
+  --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.3);
+  --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.4);
+  --radius-sm: 0.25rem;
+  --radius: 0.375rem;
+  --radius-md: 0.5rem;
+  --radius-lg: 0.75rem;
+
+  /* Set base font size for easier rem calculations */
+  font-size: 16px;
+}
+
+body {
+  font-family: 'Inter', sans-serif;
+  margin: 0;
+  min-height: 100vh;
+  background-color: var(--bg-color);
+  color: var(--text-color);
+  line-height: 1.5;
+}
+
+/* Grundstruktur */
+.app-container {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  width: 100%;
+  max-width: 100%;
+}
+
+.main-container {
+  display: grid;
+  grid-template-columns: 50% 50%;
+  grid-template-columns: calc(50% - 0.75rem) calc(50% - 0.75rem); /* Angepasst für gleichmäßigen Abstand */
+  gap: 1.5rem;
+  box-sizing: border-box;
+  padding: 2rem 2rem; /* Horizontales Padding wieder hinzugefügt */
+  max-width: 100%; 
+  width: 100%;
+  margin: 0;
+  align-items: stretch;
+  height: calc(100vh - 4rem);
+  min-height: 700px;
+}
+
+.chat-area,
+.todo-area {
+  background-color: var(--surface-color);
+  border-radius: var(--radius-lg);
+  padding: 1.5rem;
+  box-shadow: var(--shadow-md);
+  border: 1px solid var(--border-color);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden; /* Verhindert Überlauf */
+  min-height: 600px; /* Mindesthöhe für bessere Darstellung */
+  height: 100%; /* Gleiche Höhe für beide Bereiche */
+}
+
+/* Spezifisches Padding für Todo-Bereich, um rechten Abstand zu gewährleisten */
+.todo-area {
+  padding-right: 2rem;
+}
+
+.chat-area {
+  grid-column: 1 / 2;
+}
+
+.todo-area {
+  grid-column: 2 / 3;
+}
+
+/* Styling für die Platzhalter */
+.placeholder-box {
+  border: 2px dashed var(--border-color);
+  min-height: 300px; /* Beispielhöhe */
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  color: var(--text-muted-color);
+}
+
+.placeholder-box h2 {
+  color: var(--text-color);
+  margin-bottom: 0.5rem;
+}
+
+.placeholder-box p {
+  margin-top: 0;
+  margin-bottom: 1rem;
+}
+
+/* Allgemeine Stile (können später in Komponenten-CSS verschoben werden) */
+h2 {
+  margin-top: 0;
+  margin-bottom: 0.5rem;
+  color: var(--text-color);
+  font-size: 1.25rem;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+/* --- Vite/React Standard-CSS (teilweise entfernt/angepasst) --- */
+#root {
+  max-width: 100%;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+/* Entferne Vite-Logos und Standard-Layout */
+/* ... alte Vite-Stile entfernt ... */
+
+/* Stelle sicher, dass der Button-Standardstil nicht stört */
+button {
+  border-radius: 8px;
+  border: 1px solid transparent;
+  padding: 0.6em 1.2em;
+  font-size: 1em;
+  font-weight: 500;
+  font-family: inherit;
+  background-color: #1a1a1a; /* Beispiel, wird überschrieben */
+  cursor: pointer;
+  transition: border-color 0.25s;
+}
+/* button:hover { ... } */
+/* button:focus, button:focus-visible { ... } */
+
+/* Responsive Design Anpassungen (aus original style.css übernommen) */
+@media (max-width: 768px) {
+  body {
+    font-size: 0.95rem;
+  }
+
+  .main-container {
+    grid-template-columns: 1fr; /* Ändere auf eine Spalte */
+    grid-template-rows: auto auto; /* Zwei Reihen */
+    padding: 1rem;
+    gap: 1rem;
+    height: auto; /* Lasse die Höhe fließen für mobile Ansicht */
+  }
+
+  .chat-area {
+    grid-column: 1 / 2;
+    grid-row: 2 / 3; /* Chat unten */
+    min-height: 500px; /* Mindesthöhe für mobile Ansicht */
+  }
+
+  .todo-area {
+    grid-column: 1 / 2;
+    grid-row: 1 / 2; /* Todo oben */
+    min-height: 500px; /* Mindesthöhe für mobile Ansicht */
+  }
+
+  .placeholder-box {
+    min-height: 250px;
+  }
+}

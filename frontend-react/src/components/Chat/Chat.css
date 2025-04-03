@@ -1,0 +1,212 @@
+/* Stile für den Chat-Bereich */
+
+.chat-container-react {
+     /* Nimmt Stile von .chat-area aus App.css */
+     display: flex;
+     flex-direction: column;
+     height: 100%; /* Nimmt die volle Höhe des Containers ein */
+}
+
+.chat-container-react .subtitle {
+    color: var(--text-subtitle-color);
+    font-size: 0.875rem;
+    margin-top: 0;
+    margin-bottom: 1.25rem;
+}
+
+#chat-box {
+    flex-grow: 1;
+    overflow-y: auto;
+    margin-bottom: 1rem;
+    padding: 1rem;
+    border: none; /* Rand kommt vom Container */
+    background-color: var(--surface-color); /* Hintergrund vom Container */
+    border-radius: var(--radius);
+    /* min-height: 300px; Höhe wird durch Flexbox gesteuert */
+    scrollbar-width: thin;
+    scrollbar-color: var(--input-border-color) var(--surface-color);
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem; /* Abstand zwischen Nachrichten */
+    height: calc(100% - 120px); /* Feste Höhe abzüglich des Platzes für Header und Input */
+    min-height: 200px;
+}
+
+/* Scrollbar Styling für Webkit */
+#chat-box::-webkit-scrollbar {
+    width: 8px;
+}
+#chat-box::-webkit-scrollbar-track {
+    background: var(--surface-color);
+    border-radius: 4px;
+}
+#chat-box::-webkit-scrollbar-thumb {
+    background-color: var(--input-border-color);
+    border-radius: 4px;
+    border: 2px solid var(--surface-color); /* Padding um den Thumb */
+}
+#chat-box::-webkit-scrollbar-thumb:hover {
+    background-color: var(--text-muted-color);
+}
+
+.message {
+    padding: 0.75rem 1rem;
+    border-radius: var(--radius);
+    max-width: 80%;
+    line-height: 1.5;
+    word-wrap: break-word; /* Lange Wörter umbrechen */
+}
+
+.user-message {
+    background-color: var(--user-message-bg);
+    color: white;
+    align-self: flex-end;
+    margin-left: auto;
+    border-bottom-right-radius: 0;
+}
+
+.agent-message {
+    background-color: var(--agent-message-bg);
+    align-self: flex-start;
+    margin-right: auto;
+    border-bottom-left-radius: 0;
+}
+
+.agent-message.error-message-content { /* Styling für Fehlernachrichten */
+    background-color: rgba(207, 49, 64, 0.2);
+    color: var(--danger-color);
+    border: 1px solid rgba(207, 49, 64, 0.5);
+}
+
+/* Chat Input Area */
+.chat-input {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    margin-top: auto; /* Schiebt Eingabe nach unten */
+    padding-top: 1rem;
+    background-color: transparent;
+    border: none;
+}
+
+.input-row {
+    display: flex;
+    gap: 0.5rem;
+    align-items: center; /* Zentriert Button und Input vertikal */
+}
+
+#user-input {
+    flex-grow: 1;
+    padding: 0.75rem 1rem;
+    border: 1px solid var(--input-border-color);
+    border-radius: var(--radius);
+    background-color: var(--input-bg-color);
+    color: var(--text-color);
+    font-size: 1rem;
+    transition: border-color 0.15s ease;
+}
+
+#user-input:focus {
+    outline: none;
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.25);
+}
+
+#user-input::placeholder {
+    color: var(--text-muted-color);
+}
+
+#user-input:disabled {
+    background-color: var(--todo-item-bg); /* Leichter ausgegraut */
+    cursor: not-allowed;
+}
+
+#send-button {
+    padding: 0.75rem;
+    background-color: var(--primary-color);
+    color: white;
+    border: none;
+    border-radius: var(--radius);
+    cursor: pointer;
+    transition: background-color 0.15s ease;
+    font-size: 1rem;
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px; /* Feste Breite/Höhe beibehalten */
+    height: 40px;
+    flex-shrink: 0;
+}
+
+#send-button:hover {
+    background-color: var(--primary-hover-color);
+}
+
+#send-button:disabled {
+    background-color: var(--input-border-color);
+    cursor: not-allowed;
+}
+
+/* Einfacher CSS Lade-Spinner */
+.spinner {
+  border: 3px solid rgba(255, 255, 255, 0.3);
+  border-radius: 50%;
+  border-top-color: #fff;
+  width: 16px;
+  height: 16px;
+  animation: spin 1s ease-in-out infinite;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+.model-selection {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-top: 0.5rem;
+    font-size: 0.875rem;
+}
+
+.model-selection label {
+    color: var(--text-muted-color);
+}
+
+.model-selection select {
+    padding: 0.25rem 0.5rem;
+    border: 1px solid var(--input-border-color);
+    border-radius: var(--radius-sm);
+    background-color: var(--input-bg-color);
+    color: var(--text-color);
+    font-size: 0.875rem;
+}
+
+.model-selection select:disabled {
+    background-color: var(--todo-item-bg);
+    cursor: not-allowed;
+    opacity: 0.7;
+}
+
+/* Responsive Anpassungen für Chat */
+@media (max-width: 768px) {
+    #chat-box {
+        /* max-height: 50vh; Höhe über Container steuern */
+        padding: 0.75rem;
+    }
+
+    #send-button {
+        height: 44px;
+        width: 44px;
+    }
+
+    #user-input {
+        padding: 0.85rem 1rem;
+        font-size: 1rem;
+    }
+
+    .model-selection select {
+        font-size: 0.9rem;
+    }
+} 
